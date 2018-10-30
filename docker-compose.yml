@@ -1,0 +1,17 @@
+version: '3.2'
+services:
+  app:
+    build: .
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /sys/kernel/debug:/sys/kernel/debug
+      - /usr:/usr:ro
+      # please create ~/.config/opensnitch/ in advance with appropriate permissions
+      - ~/.config/opensnitch/:/home/app/.opensnitch
+      - ~/.config/opensnitch/rules:/opensnitch/go/src/github.com/evilsocket/opensnitch/ui/rules
+    environment:
+      DISPLAY: unix$DISPLAY
+    privileged: true
+    network_mode: host
+    restart: always
+    pid: host
